@@ -1,5 +1,5 @@
 const numOfVowels = (str) => {
-  let vow = str.split("").filter((c) => "aeiouAEIOU".includes(c));
+  let vow = str.split("").filter((M) => "aeiouAEIOU".includes(M));
   return vow.length;
 };
 
