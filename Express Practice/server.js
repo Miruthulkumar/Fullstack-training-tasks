@@ -12,15 +12,18 @@ import users from "./userSchema.js";
 
 app.use(express.json());
 
+//returns hello world
 app.get("/home", (req, res) => {
   res.status(200).send("Hello, World!");
 });
 
+//returns Heelo (username)
 app.get("/home/user/:name", (req, res) => {
   const userName = req.params.name;
   res.status(200).send(`Hello, ${userName}`);
 });
 
+//returns payload json back to user
 app.post("/home/post", (req, res) => {
   const userData = req.body;
   res.status(200).json(userData);
