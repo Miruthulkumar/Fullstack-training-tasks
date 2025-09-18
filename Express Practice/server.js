@@ -2,6 +2,12 @@
 import express from "express"; //can be used after adding the type:"module" in package.json [Thanks Sanjai!]
 const app = express();
 const PORT = 6000;
+
+const connectDb = require("./db");
+connectDb();
+
+const users = require("./userSchema");
+
 app.use(express.json());
 
 app.get("/home", (req, res) => {
