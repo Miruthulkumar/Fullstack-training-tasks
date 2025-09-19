@@ -38,6 +38,12 @@ router.get("/role/:role", async (req, res) => {
   res.status(200).json(findByRole);
 });
 
+//delete user
+router.delete("/delete/:id", async (req, res) => {
+  const deleteUser = await users.findOneAndDelete({ userId: req.params.id });
+  res.status(200).send("User Deleted Successfully");
+});
+
 //handling invalid endpoints gracefully
 router.use((req, res) => {
   res.status(404).send("Page not found");
