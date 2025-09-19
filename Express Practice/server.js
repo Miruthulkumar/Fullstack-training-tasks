@@ -1,9 +1,14 @@
 // const express = require("express");
 import express from "express"; //can be used after adding the type:"module" in package.json [Thanks Sanjai!]
+import logTimestamp from "./logTImeStamp.js";
 const app = express();
 const PORT = 6069;
 
+//middleware to use json
 app.use(express.json());
+
+//calling timestamp middleware
+app.use(logTimestamp);
 
 // const connectDb = require("./db");
 import connectDb from "./db.js";
