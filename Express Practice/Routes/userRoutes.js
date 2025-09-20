@@ -1,4 +1,5 @@
 import express from "express";
+import jwt from "jsonwebtoken";
 const router = express.Router();
 
 // const users = require("./userSchema");
@@ -42,6 +43,11 @@ router.get("/role/:role", async (req, res) => {
 router.delete("/delete/:id", async (req, res) => {
   const deleteUser = await users.findOneAndDelete({ userId: req.params.id });
   res.status(200).send("User Deleted Successfully");
+});
+
+//login authentication
+router.post("/login", (req, res) => {
+  return;
 });
 
 //handling invalid endpoints gracefully
