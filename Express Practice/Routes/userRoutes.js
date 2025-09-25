@@ -6,10 +6,14 @@ const router = express.Router();
 import users from "../userSchema.js";
 
 //add user
-router.post("/usercreation", checkRole(["Admin", "Member"]), async (req, res) => {
-  const newUser = await users.create(req.body);
-  res.status(200).json(newUser);
-});
+router.post(
+  "/usercreation",
+  checkRole(["Admin", "Member"]),
+  async (req, res) => {
+    const newUser = await users.create(req.body);
+    res.status(200).json(newUser);
+  }
+);
 
 //update user
 router.put("/update/:id", checkRole(["Admin"]), async (req, res) => {
