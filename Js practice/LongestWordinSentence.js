@@ -3,8 +3,8 @@ const longestWord = (sentence) => {
 
   let longestWord = words[0];
 
-  for (let word of words) {
-    if (word.length > longestWord.length) {
+  for (let i = 0; i < words.length; i++) {
+    if (words.length > longestWord.length) {
       longestWord = word;
     }
   }
