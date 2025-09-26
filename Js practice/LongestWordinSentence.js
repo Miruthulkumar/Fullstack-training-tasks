@@ -4,8 +4,8 @@ const longestWord = (sentence) => {
   let longestWord = words[0];
 
   for (let i = 0; i < words.length; i++) {
-    if (words.length > longestWord.length) {
-      longestWord = word;
+    if (words[i].length > longestWord.length) {
+      longestWord = words[i];
     }
   }
   return longestWord;
