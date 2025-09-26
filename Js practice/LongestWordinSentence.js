@@ -11,4 +11,4 @@ const longestWord = (sentence) => {
   return longestWord;
 };
 
-console.log(longestWord("mirjuab dbwafdhbfa fauefubefb"));
+console.log(longestWord("Miruthul likes to visit his hometown!"));
