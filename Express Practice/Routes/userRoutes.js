@@ -1,18 +1,22 @@
 import express from "express";
-import jwt from "jsonwebtoken";
+import checkRole from "../middleware/authrole.js";
 const router = express.Router();
 
 // const users = require("./userSchema");
 import users from "../userSchema.js";
 
 //add user
-router.post("/usercreation", async (req, res) => {
-  const newUser = await users.create(req.body);
-  res.status(200).json(newUser);
-});
+router.post(
+  "/usercreation",
+  checkRole(["Admin", "Member"]),
+  async (req, res) => {
+    const newUser = await users.create(req.body);
+    res.status(200).json(newUser);
+  }
+);
 
 //update user
-router.put("/update/:id", async (req, res) => {
+router.put("/update/:id", checkRole(["Admin"]), async (req, res) => {
   const updateUser = await users.findOneAndUpdate(
     { userId: req.params.id },
     req.body,
@@ -22,32 +26,35 @@ router.put("/update/:id", async (req, res) => {
 });
 
 //get all users
-router.get("/", async (req, res) => {
+router.get("/", checkRole(["Admin", "Member", "Guest"]), async (req, res) => {
   const allUsers = await users.find();
   res.status(200).json(allUsers);
 });
 
 //find by id
-router.get("/userid/:id", async (req, res) => {
-  const findById = await users.findOne({ userId: req.params.id });
-  res.status(200).json(findById);
-});
+router.get(
+  "/userid/:id",
+  checkRole(["Admin", "Member", "Guest"]),
+  async (req, res) => {
+    const findById = await users.findOne({ userId: req.params.id });
+    res.status(200).json(findById);
+  }
+);
 
 //find by role
-router.get("/role/:role", async (req, res) => {
-  const findByRole = await users.find({ role: req.params.role });
-  res.status(200).json(findByRole);
-});
+router.get(
+  "/role/:role",
+  checkRole(["Admin", "Member", "Guest"]),
+  async (req, res) => {
+    const findByRole = await users.find({ role: req.params.role });
+    res.status(200).json(findByRole);
+  }
+);
 
 //delete user
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", checkRole(["Admin"]), async (req, res) => {
   const deleteUser = await users.findOneAndDelete({ userId: req.params.id });
   res.status(200).send("User Deleted Successfully");
-});
-
-//login authentication
-router.post("/login", (req, res) => {
-  return;
 });
 
 //handling invalid endpoints gracefully

@@ -1,6 +1,6 @@
 // const express = require("express");
 import express from "express"; //can be used after adding the type:"module" in package.json [Thanks Sanjai!]
-import logTimestamp from "./logTImeStamp.js";
+import logTimestamp from "./middleware/logTimestamp.js";
 const app = express();
 const PORT = 6069;
 
