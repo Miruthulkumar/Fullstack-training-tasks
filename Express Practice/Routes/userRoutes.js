@@ -59,7 +59,7 @@ router.delete("/delete/:id", checkRole(["Admin"]), async (req, res) => {
 });
 
 // delete all users
-router.delete("/delete/all", checkRole(["Admin"]), async (req, res) => {
+router.delete("/dlte/all", checkRole(["Admin"]), async (req, res) => {
   try {
     const result = await users.deleteMany({});
     if (result.deletedCount === 0) {
@@ -88,7 +88,7 @@ router.post("/login", async (req, res) => {
     if (found.password !== password) {
       return res.status(401).send("Invalid credentials");
     }
-
+    
     // create JWT
     const token = jwt.sign(
       { userId: found.userId, role: found.role },
