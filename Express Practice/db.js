@@ -1,10 +1,10 @@
 // const mongoose = require("mongoose");
 import mongoose from "mongoose";
+import env from "dotenv";
+env.config();
 
 async function connectDb() {
-  const connect = await mongoose.connect(
-    "mongodb+srv://miruthul:IyLBTWLHTjq9BGmc@cluster0.avtwclw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  );
+  const connect = await mongoose.connect(process.env.MongoDB_URL);
   console.log("Database connected successfully ✅");
 }
 
