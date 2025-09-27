@@ -1,7 +1,7 @@
 import express from "express";
 import checkRole from "../middleware/authrole.js";
 const router = express.Router();
-// import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 // const users = require("./userSchema");
 import users from "../userSchema.js";
@@ -58,34 +58,49 @@ router.delete("/delete/:id", checkRole(["Admin"]), async (req, res) => {
   res.status(200).send("User Deleted Successfully");
 });
 
-// // login endpoint
-// router.post("/login", async (req, res) => {
-//   try {
-//     const { userId, password } = req.body;
+// delete all users
+router.delete("/delete/all", checkRole(["Admin"]), async (req, res) => {
+  try {
+    const result = await users.deleteMany({});
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "No users to delete" });
+    }
+    res
+      .status(200)
+      .json({ message: `${result.deletedCount} users deleted successfully` });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
-//     // check if user exists
-//     const found = await users.findOne({ userId: userId });
-//     if (!found) {
-//       return res.status(404).send("User not found");
-//     }
+// login endpoint
+router.post("/login", async (req, res) => {
+  try {
+    const { userId, password } = req.body;
 
-//     // check password (⚠️ in real apps, use hashed passwords with bcrypt)
-//     if (found.password !== password) {
-//       return res.status(401).send("Invalid credentials");
-//     }
+    // check if user exists
+    const found = await users.findOne({ userId: userId });
+    if (!found) {
+      return res.status(404).send("User not found");
+    }
 
-//     // create JWT
-//     const token = jwt.sign(
-//       { userId: found.userId, role: found.role },
-//       "secretkey", // 🔒 replace with env var
-//       { expiresIn: "1h" }
-//     );
+    // check password (⚠️ in real apps, use hashed passwords with bcrypt)
+    if (found.password !== password) {
+      return res.status(401).send("Invalid credentials");
+    }
 
-//     res.status(200).json({ message: "Login successful", token });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+    // create JWT
+    const token = jwt.sign(
+      { userId: found.userId, role: found.role },
+      "secretkey", // 🔒 replace with env var
+      { expiresIn: "1h" }
+    );
+
+    res.status(200).json({ message: "Login successful", token });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 //handling invalid endpoints gracefully
 router.use((req, res) => {
