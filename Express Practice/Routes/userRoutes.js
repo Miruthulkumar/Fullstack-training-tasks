@@ -3,6 +3,9 @@ import checkRole from "../middleware/authrole.js";
 const router = express.Router();
 import jwt from "jsonwebtoken";
 
+import env from "dotenv";
+env.config();
+
 // const users = require("./userSchema");
 import users from "../userSchema.js";
 
@@ -84,15 +87,15 @@ router.post("/login", async (req, res) => {
       return res.status(404).send("User not found");
     }
 
-    // check password (⚠️ in real apps, use hashed passwords with bcrypt)
+    // check password replace with bcrypt
     if (found.password !== password) {
       return res.status(401).send("Invalid credentials");
     }
-    
+
     // create JWT
     const token = jwt.sign(
       { userId: found.userId, role: found.role },
-      "secretkey", // 🔒 replace with env var
+      process.env.SecretKey_URL, // 🔒 replace with env var
       { expiresIn: "1h" }
     );
 
