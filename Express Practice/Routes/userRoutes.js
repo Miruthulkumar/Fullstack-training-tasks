@@ -1,7 +1,7 @@
 import express from "express";
 import checkRole from "../middleware/authrole.js";
 const router = express.Router();
-import jwt from "jsonwebtoken";
+// import jwt from "jsonwebtoken";
 
 // const users = require("./userSchema");
 import users from "../userSchema.js";
@@ -58,34 +58,34 @@ router.delete("/delete/:id", checkRole(["Admin"]), async (req, res) => {
   res.status(200).send("User Deleted Successfully");
 });
 
-// login endpoint
-router.post("/login", async (req, res) => {
-  try {
-    const { userId, password } = req.body;
+// // login endpoint
+// router.post("/login", async (req, res) => {
+//   try {
+//     const { userId, password } = req.body;
 
-    // check if user exists
-    const found = await users.findOne({ userId: userId });
-    if (!found) {
-      return res.status(404).send("User not found");
-    }
+//     // check if user exists
+//     const found = await users.findOne({ userId: userId });
+//     if (!found) {
+//       return res.status(404).send("User not found");
+//     }
 
-    // check password (⚠️ in real apps, use hashed passwords with bcrypt)
-    if (found.password !== password) {
-      return res.status(401).send("Invalid credentials");
-    }
+//     // check password (⚠️ in real apps, use hashed passwords with bcrypt)
+//     if (found.password !== password) {
+//       return res.status(401).send("Invalid credentials");
+//     }
 
-    // create JWT
-    const token = jwt.sign(
-      { userId: found.userId, role: found.role },
-      "secretkey", // 🔒 replace with env var
-      { expiresIn: "1h" }
-    );
+//     // create JWT
+//     const token = jwt.sign(
+//       { userId: found.userId, role: found.role },
+//       "secretkey", // 🔒 replace with env var
+//       { expiresIn: "1h" }
+//     );
 
-    res.status(200).json({ message: "Login successful", token });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+//     res.status(200).json({ message: "Login successful", token });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
 //handling invalid endpoints gracefully
 router.use((req, res) => {

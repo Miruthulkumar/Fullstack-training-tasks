@@ -2,7 +2,7 @@
 import express from "express"; //can be used after adding the type:"module" in package.json [Thanks Sanjai!]
 import logTimestamp from "./middleware/logTimestamp.js";
 const app = express();
-const PORT = 5000;
+const PORT = 4050;
 
 //middleware to use json
 app.use(express.json());
