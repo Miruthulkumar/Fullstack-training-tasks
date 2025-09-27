@@ -13,7 +13,6 @@ import users from "../userSchema.js";
 //add user
 router.post(
   "/usercreation",
-  checkRole(["Admin", "Member"]),
   async (req, res) => {
     const newUser = await users.create(req.body);
     res.status(200).json(newUser);
@@ -21,7 +20,7 @@ router.post(
 );
 
 //update user
-router.put("/update/:id", checkRole(["Admin"]), async (req, res) => {
+router.put("/update/:id", async (req, res) => {
   const updateUser = await users.findOneAndUpdate(
     { userId: req.params.id },
     req.body,
@@ -31,7 +30,7 @@ router.put("/update/:id", checkRole(["Admin"]), async (req, res) => {
 });
 
 //get all users
-router.get("/", checkRole(["Admin", "Member", "Guest"]), async (req, res) => {
+router.get("/", async (req, res) => {
   const allUsers = await users.find();
   res.status(200).json(allUsers);
 });
@@ -39,7 +38,6 @@ router.get("/", checkRole(["Admin", "Member", "Guest"]), async (req, res) => {
 //find by id
 router.get(
   "/userid/:id",
-  checkRole(["Admin", "Member", "Guest"]),
   async (req, res) => {
     const findById = await users.findOne({ userId: req.params.id });
     res.status(200).json(findById);
@@ -49,7 +47,6 @@ router.get(
 //find by role
 router.get(
   "/role/:role",
-  checkRole(["Admin", "Member", "Guest"]),
   async (req, res) => {
     const findByRole = await users.find({ role: req.params.role });
     res.status(200).json(findByRole);
@@ -57,13 +54,13 @@ router.get(
 );
 
 //delete user
-router.delete("/delete/:id", checkRole(["Admin"]), async (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
   const deleteUser = await users.findOneAndDelete({ userId: req.params.id });
   res.status(200).send("User Deleted Successfully");
 });
 
 // delete all users
-router.delete("/dlte/all", checkRole(["Admin"]), async (req, res) => {
+router.delete("/dlte/all", async (req, res) => {
   try {
     const result = await users.deleteMany({});
     if (result.deletedCount === 0) {
