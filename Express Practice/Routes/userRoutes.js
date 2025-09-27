@@ -3,6 +3,7 @@ import checkRole from "../middleware/authrole.js";
 const router = express.Router();
 import jwt from "jsonwebtoken";
 
+//env config for secket key
 import env from "dotenv";
 env.config();
 
