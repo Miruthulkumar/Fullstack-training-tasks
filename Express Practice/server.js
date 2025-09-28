@@ -2,7 +2,8 @@
 import express from "express"; //can be used after adding the type:"module" in package.json [Thanks Sanjai!]
 import logTimestamp from "./middleware/logTimestamp.js";
 const app = express();
-const PORT = 4050;
+import env from "dotenv";
+env.config();
 
 //middleware to use json
 app.use(express.json());
@@ -22,6 +23,6 @@ app.use("/home", bookRoutes);
 import userRoutes from "./Routes/userRoutes.js";
 app.use("/users", userRoutes);
 
-app.listen(PORT, () => {
-  console.log(`The server is running at port ${PORT} ✅`);
+app.listen(process.env.PORT, () => {
+  console.log(`The server is running at port ${process.env.PORT} ✅`);
 });
