@@ -29,7 +29,7 @@ router.post("/login", async (req, res) => {
     // create JWT
     const token = jwt.sign(
       { userId: found.userId, role: found.role },
-      process.env.SecretKey_URL, // 🔒 replace with env var
+      process.env.SecretKey_URL, 
       { expiresIn: "1h" }
     );
 
@@ -77,7 +77,7 @@ router.get("/role/:role", async (req, res) => {
 });
 
 //delete user
-router.delete("/delete/:id",checkRole(["Admin"]) ,async (req, res) => {
+router.delete("/delete/:id", checkRole(["Admin"]), async (req, res) => {
   const deleteUser = await users.findOneAndDelete({ userId: req.params.id });
   res.status(200).send("User Deleted Successfully");
 });
