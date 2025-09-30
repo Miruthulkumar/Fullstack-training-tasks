@@ -13,6 +13,7 @@ env.config();
 // const users = require("./userSchema");
 import users from "../userSchema.js";
 
+//using ratelimiter middleware
 router.use(generalLimiter);
 
 // login endpoint
