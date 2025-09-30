@@ -1,6 +1,7 @@
 // const express = require("express");
 import express from "express"; //can be used after adding the type:"module" in package.json [Thanks Sanjai!]
 import logTimestamp from "./middleware/logTimestamp.js";
+import generalLimiter from "./middleware/rateLimiter.js";
 const app = express();
 
 //import env from dotenv
@@ -12,6 +13,9 @@ app.use(express.json());
 
 //calling timestamp middleware
 app.use(logTimestamp);
+
+//calling ratelimiter middleware
+app.use(generalLimiter);
 
 // const connectDb = require("./db");
 import connectDb from "./db.js";

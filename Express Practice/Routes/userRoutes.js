@@ -3,18 +3,12 @@ import checkRole from "../middleware/authrole.js";
 const router = express.Router();
 import jwt from "jsonwebtoken";
 
-//importing ratelimiter
-import generalLimiter from "../middleware/rateLimiter.js";
-
 //env config for secket key
 import env from "dotenv";
 env.config();
 
 // const users = require("./userSchema");
 import users from "../userSchema.js";
-
-//using ratelimiter middleware
-router.use(generalLimiter);
 
 // login endpoint
 router.post("/login", async (req, res) => {
