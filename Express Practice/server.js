@@ -2,6 +2,8 @@
 import express from "express"; //can be used after adding the type:"module" in package.json [Thanks Sanjai!]
 import logTimestamp from "./middleware/logTimestamp.js";
 const app = express();
+
+//import env from dotenv
 import env from "dotenv";
 env.config();
 
