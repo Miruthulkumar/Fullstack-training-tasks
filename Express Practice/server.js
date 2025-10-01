@@ -8,6 +8,10 @@ const app = express();
 import env from "dotenv";
 env.config();
 
+// const connectDb = require("./db");
+import connectDb from "./db.js";
+connectDb();
+
 //middleware to use json
 app.use(express.json());
 
@@ -17,13 +21,9 @@ app.use(logTimestamp);
 //calling ratelimiter middleware
 app.use(generalLimiter);
 
-// const connectDb = require("./db");
-import connectDb from "./db.js";
-connectDb();
-
 //importing home router
-import bookRoutes from "./Routes/homeRoutes.js";
-app.use("/home", bookRoutes);
+import homeRoutes from "./Routes/homeRoutes.js";
+app.use("/home", homeRoutes);
 
 // importing user router
 import userRoutes from "./Routes/userRoutes.js";

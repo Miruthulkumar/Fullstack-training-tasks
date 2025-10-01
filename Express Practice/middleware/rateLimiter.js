@@ -8,7 +8,7 @@ const generalLimiter = rateLimit({
       "Too many requests from this IP, please try again after 15 minutes.",
   },
   standardHeaders: true, // return rate limit info in headers
-  legacyHeaders: false,
+  legacyHeaders: false, //avoids sending depreceated information in response headers
 });
 
 export default generalLimiter;
