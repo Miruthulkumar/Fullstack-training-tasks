@@ -2,6 +2,7 @@
 import express from "express"; //can be used after adding the type:"module" in package.json [Thanks Sanjai!]
 import logTimestamp from "./middleware/logTimestamp.js";
 import generalLimiter from "./middleware/rateLimiter.js";
+import responseTime from "response-time";
 const app = express();
 
 //import env from dotenv
@@ -20,6 +21,14 @@ app.use(logTimestamp);
 
 //calling ratelimiter middleware
 app.use(generalLimiter);
+
+//calling responsetimelogger middleware
+app.use(responseTime());
+app.use(
+  responseTime((req, res, time) => {
+    console.log(`${req.method} ${req.url} took ${time.toFixed(2)} ms`);
+  })
+);
 
 //importing home router
 import homeRoutes from "./Routes/homeRoutes.js";
