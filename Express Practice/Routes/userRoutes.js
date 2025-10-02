@@ -4,7 +4,7 @@ const router = express.Router();
 import jwt from "jsonwebtoken";
 
 //env config for secket key
-import env from "dotenv";
+import env, { parse } from "dotenv";
 env.config();
 
 // const users = require("./userSchema");
@@ -68,6 +68,19 @@ router.get("/", async (req, res) => {
 router.get("/userid/:id", async (req, res) => {
   const findById = await users.findOne({ userId: req.params.id });
   res.status(200).json(findById);
+});
+
+//limit offset pagination...
+router.get("/userid/:start/:end", async (req, res) => {
+  const start = parseInt(req.params.start);
+  const end = parseInt(req.params.end);
+
+  const userList =await users
+    .find()
+    .skip(start)
+    .limit(start - end);
+
+  res.status(200).json(userList);
 });
 
 //find by role
