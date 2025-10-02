@@ -24,11 +24,6 @@ app.use(generalLimiter);
 
 //calling responsetimelogger middleware
 app.use(responseTime());
-app.use(
-  responseTime((req, res, time) => {
-    console.log(`${req.method} ${req.url} took ${time.toFixed(2)} ms`);
-  })
-);
 
 //importing home router
 import homeRoutes from "./Routes/homeRoutes.js";
