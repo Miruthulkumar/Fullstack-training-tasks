@@ -2,6 +2,7 @@ import express from "express";
 import checkRole from "../middleware/authrole.js";
 const router = express.Router();
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 //env config for secket key
 import env, { parse } from "dotenv";
@@ -21,8 +22,9 @@ router.post("/login", async (req, res) => {
       return res.status(404).send("User not found");
     }
 
-    // check password replace with bcrypt
-    if (found.password !== password) {
+    // check password with bcrypt
+    const isMatch = await bcrypt.compare(password, found.password);
+    if (!isMatch) {
       return res.status(401).send("Invalid credentials");
     }
 
@@ -42,20 +44,63 @@ router.post("/login", async (req, res) => {
 // Apply checkRole middleware to all routes below
 router.use(checkRole());
 
-//add user
+//add user with input validation and safe bcrypt hashing
 router.post("/usercreation", async (req, res) => {
-  const newUser = await users.create(req.body);
-  res.status(200).json(newUser);
+  try {
+    const usersArray = req.body; // expecting an array of user objects
+
+    if (!Array.isArray(usersArray) || usersArray.length === 0) {
+      return res.status(400).json({ error: "Request body must be a non-empty array" });
+    }
+
+    const createdUsers = [];
+
+    for (let user of usersArray) {
+      const username = user.username?.trim();
+      const userId = user.userId?.trim();
+      const password = user.password?.trim();
+      const role = user.role?.trim();
+
+      if (!username || !userId || !password || !role) {
+        return res.status(400).json({ error: "All fields are required for each user" });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      const newUser = await users.create({
+        username,
+        userId,
+        password: hashedPassword,
+        role,
+      });
+
+      createdUsers.push(newUser);
+    }
+
+    res.status(201).json({ message: "Users created successfully", users: createdUsers });
+  } catch (err) {
+    console.error("Error creating users:", err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 //update user
 router.put("/update/:id", async (req, res) => {
-  const updateUser = await users.findOneAndUpdate(
-    { userId: req.params.id },
-    req.body,
-    { new: true }
-  );
-  res.status(200).json(updateUser);
+  try {
+    if (req.body.password) {
+      req.body.password = await bcrypt.hash(req.body.password, 10);
+    }
+
+    const updateUser = await users.findOneAndUpdate(
+      { userId: req.params.id },
+      req.body,
+      { new: true }
+    );
+
+    res.status(200).json(updateUser);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 //get all users
@@ -75,7 +120,7 @@ router.get("/userid/:start/:end", async (req, res) => {
   const start = parseInt(req.params.start);
   const end = parseInt(req.params.end);
 
-  const userList =await users
+  const userList = await users
     .find()
     .skip(start)
     .limit(start - end);
