@@ -105,39 +105,65 @@ router.put("/update/:id", async (req, res) => {
 
 //get all users
 router.get("/", async (req, res) => {
-  const allUsers = await users.find();
-  res.status(200).json(allUsers);
+  try {
+    const allUsers = await users.find();
+    res.status(200).json(allUsers);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 //find by id
 router.get("/userid/:id", async (req, res) => {
-  const findById = await users.findOne({ userId: req.params.id });
-  res.status(200).json(findById);
+  try {
+    const findById = await users.findOne({ userId: req.params.id });
+    if (!findById) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(findById);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 //limit offset pagination...
 router.get("/userid/:start/:end", async (req, res) => {
-  const start = parseInt(req.params.start);
-  const end = parseInt(req.params.end);
+  try {
+    const start = parseInt(req.params.start);
+    const end = parseInt(req.params.end);
 
-  const userList = await users
-    .find()
-    .skip(start)
-    .limit(start - end);
+    const userList = await users
+      .find()
+      .skip(start)
+      .limit(start - end);
 
-  res.status(200).json(userList);
+    res.status(200).json(userList);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 //find by role
 router.get("/role/:role", async (req, res) => {
-  const findByRole = await users.find({ role: req.params.role });
-  res.status(200).json(findByRole);
+  try {
+    const findByRole = await users.find({ role: req.params.role });
+    res.status(200).json(findByRole);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 //delete user
 router.delete("/delete/:id", checkRole(["Admin"]), async (req, res) => {
-  const deleteUser = await users.findOneAndDelete({ userId: req.params.id });
-  res.status(200).send("User Deleted Successfully");
+  try {
+    const deleteUser = await users.findOneAndDelete({ userId: req.params.id });
+    if (!deleteUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).send("User Deleted Successfully");
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // delete all users
