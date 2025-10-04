@@ -28,29 +28,6 @@ app.use(generalLimiter);
 //calling responsetimelogger middleware
 app.use(responseTime());
 
-import swaggerUi from "swagger-ui-express";
-import swaggerJsdoc from "swagger-jsdoc";
-
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "User Management API",
-      version: "1.0.0",
-      description: "API documentation for User Management project",
-    },
-    servers: [
-      {
-        url: `http://localhost:${process.env.PORT}`,
-      },
-    ],
-  },
-  apis: ["./Routes/*.js"],
-};
-
-const swaggerSpec = swaggerJsdoc(options);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
 //importing home router
 import homeRoutes from "./Routes/homeRoutes.js";
 app.use("/home", homeRoutes);
