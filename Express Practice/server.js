@@ -29,7 +29,7 @@ app.use(generalLimiter);
 app.use(responseTime());
 
 //importing home router
-import homeRoutes from "./Routes/homeRoutes.js";
+import homeRoutes  from "./Routes/homeRoutes.js";
 app.use("/home", homeRoutes);
 
 // importing user router
