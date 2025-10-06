@@ -135,7 +135,7 @@ router.get("/userid/:start/:end", async (req, res) => {
     const userList = await users
       .find()
       .skip(start)
-      .limit(start - end);
+      .limit(end - start);
 
     res.status(200).json(userList);
   } catch (err) {
