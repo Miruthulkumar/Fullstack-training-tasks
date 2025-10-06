@@ -21,8 +21,6 @@
     "mongodb": "^6.20.0",
     "mongoose": "^8.18.2",
     "nodemon": "^3.1.10",
-    "response-time": "^2.3.4",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1"
+    "response-time": "^2.3.4"
   }
 }
