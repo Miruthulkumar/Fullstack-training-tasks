@@ -17,6 +17,7 @@ connectDb();
 //middleware to use json
 app.use(express.json());
 
+//safety to prevent sql injection and other web vulnerabilities
 app.use(helmet());
 
 //calling timestamp middleware
