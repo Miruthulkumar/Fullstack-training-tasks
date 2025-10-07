@@ -1,7 +1,6 @@
 import "../src/Login.css";
 
 const Login = () => {
-
   return (
     <div>
       <div className="loginbgdiv">
@@ -24,9 +23,7 @@ const Login = () => {
           />
         </div>
         <div>
-          <button className="button">
-            Login
-          </button>
+          <button className="button">Login</button>
         </div>
       </div>
     </div>
