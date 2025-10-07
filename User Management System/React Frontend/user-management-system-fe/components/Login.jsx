@@ -9,6 +9,7 @@ const Login = () => {
             className="inputfield"
             type="text"
             placeholder="Enter your userid"
+            style={{ marginLeft: "28px" }}
           />
         </div>
         <div className="logindivs">
