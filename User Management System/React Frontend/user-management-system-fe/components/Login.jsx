@@ -1,3 +1,5 @@
+import "../src/Login.css";
+
 const Login = () => {
   return (
     <div>

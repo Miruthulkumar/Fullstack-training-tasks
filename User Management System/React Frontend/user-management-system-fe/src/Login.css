@@ -1,0 +1,47 @@
+
+h1 {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+
+p {
+  color: white;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+
+.logindivs {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.inputfield {
+  background-color: powderblue;
+  border-radius: 5px;
+  margin: 10px;
+  color: black;
+}
+
+.inputfield::placeholder {
+  color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.inputfield:focus-within {
+  border-color: #FFD460;
+  box-shadow: 0 0 15px rgba(255, 212, 96, 0.7);
+}
+
+.loginbgdiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #34656d;
+  border-radius: 10px;
+  width: 125%;
+  height: 280px;
+}
+
+.button {
+  background-color: #334443;
+  width: 150‘px;
+}
