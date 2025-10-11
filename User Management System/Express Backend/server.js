@@ -25,7 +25,7 @@ app.use(helmet());
 // app.use(logTimestamp);
 
 //calling morgan
-app.use(morgan("combined"));
+app.use(morgan("tiny"));
 
 //calling ratelimiter middleware
 app.use(generalLimiter);
