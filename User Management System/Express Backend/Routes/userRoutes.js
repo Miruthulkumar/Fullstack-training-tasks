@@ -50,7 +50,9 @@ router.post("/usercreation", async (req, res) => {
     const usersArray = req.body; // expecting an array of user objects
 
     if (!Array.isArray(usersArray) || usersArray.length === 0) {
-      return res.status(400).json({ error: "Request body must be a non-empty array" });
+      return res
+        .status(400)
+        .json({ error: "Request body must be a non-empty array" });
     }
 
     const createdUsers = [];
@@ -62,7 +64,9 @@ router.post("/usercreation", async (req, res) => {
       const role = user.role?.trim();
 
       if (!username || !userId || !password || !role) {
-        return res.status(400).json({ error: "All fields are required for each user" });
+        return res
+          .status(400)
+          .json({ error: "All fields are required for each user" });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -77,7 +81,9 @@ router.post("/usercreation", async (req, res) => {
       createdUsers.push(newUser);
     }
 
-    res.status(201).json({ message: "Users created successfully", users: createdUsers });
+    res
+      .status(201)
+      .json({ message: "Users created successfully", users: createdUsers });
   } catch (err) {
     console.error("Error creating users:", err);
     res.status(500).json({ error: err.message });

@@ -4,6 +4,7 @@ import logTimestamp from "./middleware/logTimestamp.js";
 import generalLimiter from "./middleware/rateLimiter.js";
 import responseTime from "response-time";
 import helmet from "helmet";
+import morgan from "morgan";
 const app = express();
 
 //import env from dotenv
@@ -21,7 +22,10 @@ app.use(express.json());
 app.use(helmet());
 
 //calling timestamp middleware
-app.use(logTimestamp);
+// app.use(logTimestamp);
+
+//calling morgan
+app.use(morgan("combined"));
 
 //calling ratelimiter middleware
 app.use(generalLimiter);
@@ -30,7 +34,7 @@ app.use(generalLimiter);
 app.use(responseTime());
 
 //importing home router
-import homeRoutes  from "./Routes/homeRoutes.js";
+import homeRoutes from "./Routes/homeRoutes.js";
 app.use("/home", homeRoutes);
 
 // importing user router
