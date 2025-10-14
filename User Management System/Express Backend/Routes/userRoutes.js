@@ -42,7 +42,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Apply checkRole middleware to all routes below
-router.use(checkRole());
+router.use(checkRole());  
 
 //add user with input validation and safe bcrypt hashing
 router.post("/usercreation", async (req, res) => {
